@@ -1,11 +1,42 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <TargetFramework>net8.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="img\Aiguille.png" />
+    <None Remove="img\Background.png" />
+    <None Remove="img\bas_fusee.png" />
+    <None Remove="img\Bon_oiseau.png" />
+    <None Remove="img\coiffe_fusee.png" />
+    <None Remove="img\corps_fusee.png" />
+    <None Remove="img\eau.png" />
+    <None Remove="img\fusee.png" />
+    <None Remove="img\Jauge.png" />
+    <None Remove="img\OIseau.png" />
+    <None Remove="img\pompe.png" />
+    <None Remove="img\Socle_fusee.png" />
+    <None Remove="img\Sol.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="img\Aiguille.png" />
+    <Resource Include="img\Background.png" />
+    <Resource Include="img\bas_fusee.png" />
+    <Resource Include="img\Bon_oiseau.png" />
+    <Resource Include="img\coiffe_fusee.png" />
+    <Resource Include="img\corps_fusee.png" />
+    <Resource Include="img\eau.png" />
+    <Resource Include="img\fusee.png" />
+    <Resource Include="img\Jauge.png" />
+    <Resource Include="img\pompe.png" />
+    <Resource Include="img\Socle_fusee.png" />
+    <Resource Include="img\Sol.png" />
+  </ItemGroup>
 
 </Project>

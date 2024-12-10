@@ -1,12 +1,23 @@
-﻿<Window x:Class="Fusee.MainWindow"
+﻿<Window x:Name="fenetrePrincipale" x:Class="Fusee.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Fusee"
         mc:Ignorable="d"
-        Title="Hydro-fusée" Height="450" Width="800">
-    <Canvas>
+        Title="Hydro-fusée" Height="719" Width="1152" KeyDown="fenetrePrincipale_KeyDown">
+    <Canvas x:Name="canFond" Height="704" Width="1152">
+        <Image x:Name="imgFond" Height="704" Canvas.Left="0" Source="/img/Background.png" Stretch="Fill" Canvas.Top="0" Width="1152" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+        <Image x:Name="imgSol" Height="704" Canvas.Left="0" Source="/img/Sol.png" Stretch="Fill" Canvas.Top="0" Width="1152" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+        <Image x:Name="imgOiseau" Height="127" Canvas.Left="187" Source="/img/Bon_oiseau.png" Stretch="Fill" Canvas.Top="159" Width="128" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+        <Image x:Name="imgPompe" Height="704" Canvas.Left="0" Source="/img/pompe.png" Stretch="Fill" Canvas.Top="-10" Width="1152" RenderOptions.BitmapScalingMode="NearestNeighbor" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <Image x:Name="imgAileron" Height="684" Canvas.Left="177" Source="/img/bas_fusee.png" Stretch="Fill" Canvas.Top="10" Width="1132" HorizontalAlignment="Center" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+        <Image x:Name="imgSocle" Height="704" Canvas.Left="167" Source="/img/Socle_fusee.png" Stretch="Fill" Canvas.Top="-15" Width="1152" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+        <Image x:Name="imgCorps" Height="684" Canvas.Left="177" Source="/img/corps_fusee.png" Stretch="Fill" Canvas.Top="10" Width="1132" HorizontalAlignment="Left" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+        <Image x:Name="imgCoiffe" Height="684" Canvas.Left="177" Source="/img/coiffe_fusee.png" Stretch="Fill" Canvas.Top="10" Width="1132" HorizontalAlignment="Center" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+        <Image x:Name="imgJauge" Height="684" Canvas.Left="10" Source="/img/Jauge.png" Stretch="Fill" Canvas.Top="10" Width="1132" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+        <Image x:Name="imgAiguille" Height="684" Canvas.Left="10" Source="/img/Aiguille.png" Stretch="Fill" Canvas.Top="10" Width="1132" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+
 
     </Canvas>
 </Window>
