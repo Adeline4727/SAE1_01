@@ -469,6 +469,8 @@ namespace Fusee
                         break;
                     }
                 }
+                if (collision)
+                    break;
             }
             return collision;
         }
