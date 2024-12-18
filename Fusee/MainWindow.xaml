@@ -5,19 +5,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Fusee"
         mc:Ignorable="d"
-        Title="Hydro-fusée" Height="719" Width="1152" KeyDown="fenetrePrincipale_KeyDown">
-    <Canvas x:Name="canFond" Height="704" Width="1152">
-        <Image x:Name="imgFond" Height="704" Canvas.Left="0" Source="/img/Background.png" Stretch="Fill" Canvas.Top="0" Width="1152" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
-        <Image x:Name="imgSol" Height="704" Canvas.Left="0" Source="/img/Sol.png" Stretch="Fill" Canvas.Top="0" Width="1152" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
-        <Image x:Name="imgOiseau" Height="127" Canvas.Left="187" Source="/img/Bon_oiseau.png" Stretch="Fill" Canvas.Top="159" Width="128" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
-        <Image x:Name="imgPompe" Height="704" Canvas.Left="0" Source="/img/pompe.png" Stretch="Fill" Canvas.Top="-10" Width="1152" RenderOptions.BitmapScalingMode="NearestNeighbor" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-        <Image x:Name="imgAileron" Height="684" Canvas.Left="177" Source="/img/bas_fusee.png" Stretch="Fill" Canvas.Top="10" Width="1132" HorizontalAlignment="Center" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
-        <Image x:Name="imgSocle" Height="704" Canvas.Left="167" Source="/img/Socle_fusee.png" Stretch="Fill" Canvas.Top="-15" Width="1152" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
-        <Image x:Name="imgCorps" Height="684" Canvas.Left="177" Source="/img/corps_fusee.png" Stretch="Fill" Canvas.Top="10" Width="1132" HorizontalAlignment="Left" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
-        <Image x:Name="imgCoiffe" Height="684" Canvas.Left="177" Source="/img/coiffe_fusee.png" Stretch="Fill" Canvas.Top="10" Width="1132" HorizontalAlignment="Center" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
-        <Image x:Name="imgJauge" Height="684" Canvas.Left="10" Source="/img/Jauge.png" Stretch="Fill" Canvas.Top="10" Width="1132" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
-        <Image x:Name="imgAiguille" Height="684" Canvas.Left="10" Source="/img/Aiguille.png" Stretch="Fill" Canvas.Top="10" Width="1132" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
-
+        Title="Hydro-fusée" Height="734" Width="1152" KeyDown="fenetrePrincipale_KeyDown" ResizeMode="NoResize" Background="#FF451B0A">
+    <Canvas x:Name="canFond" Height="704" Width="1152" Background="#FF070C1F" VerticalAlignment="Top">
+        <Image x:Name="imgFond" Height="704" Source="/img/Decor/Background.png" Stretch="Fill" Width="1152" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+        <Image x:Name="imgSol" Height="128" Source="/img/Decor/Sol.png" Stretch="Fill" Canvas.Top="576" Width="1152" RenderOptions.BitmapScalingMode="NearestNeighbor" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <Image x:Name="imgNuage1" Height="128" Canvas.Left="724" Source="/img/Nuages/Nuage1.png" Stretch="Fill" Canvas.Top="-482" Width="384" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+        <Image x:Name="imgNuage2" Height="128" Canvas.Left="-99" Source="/img/Nuages/Nuage0.png" Stretch="Fill" Canvas.Top="-133" Width="384" RenderOptions.BitmapScalingMode="NearestNeighbor" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <Image x:Name="imgSocle" Height="64" Canvas.Left="544" Source="/img/Fusee/Socle0.png" Stretch="Fill" Canvas.Top="566" Width="64" RenderOptions.BitmapScalingMode="NearestNeighbor" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Image x:Name="imgPompe" Height="128" Canvas.Left="608" Source="/img/Pompe1.png" Stretch="Fill" Canvas.Top="502" Width="128" RenderOptions.BitmapScalingMode="NearestNeighbor" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <Image x:Name="imgCorps" Height="192" Canvas.Left="539" Source="/img/Fusee/Corps0.png" Stretch="Fill" Canvas.Top="438" Width="64" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+        <Image x:Name="imgAilerons" Height="64" Canvas.Left="512" Source="/img/Fusee/Ailerons0.png" Stretch="Fill" Canvas.Top="566" Width="128" RenderOptions.BitmapScalingMode="NearestNeighbor" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Image x:Name="imgCoiffe" Height="64" Canvas.Left="539" Source="/img/Fusee/Coiffe0.png" Stretch="Fill" Canvas.Top="396" Width="64" RenderOptions.BitmapScalingMode="NearestNeighbor" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <Image x:Name="imgJauge" Height="128" Canvas.Left="512" Source="/img/Jauge1.png" Stretch="Fill" Canvas.Top="576" Width="128" RenderOptions.BitmapScalingMode="NearestNeighbor" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Image x:Name="imgAiguille" Height="128" Canvas.Left="512" Source="/img/Aiguille/Aiguille2.png" Stretch="Fill" Canvas.Top="576" Width="128" RenderOptions.BitmapScalingMode="NearestNeighbor" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Image x:Name="imgEau" Height="192" Canvas.Left="539" Source="/img/Eau/Eau11.png" Stretch="Fill" Canvas.Top="438" Width="64" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+        <Label x:Name="labMeilleurScore" Content="Meilleur score : 0" Height="39" Width="285" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Comic Sans MS" FontWeight="Bold"/>
+        <Label x:Name="labScore" Content="Score : 0" Canvas.Top="39" HorizontalAlignment="Left" VerticalAlignment="Center" Height="39" Width="285" FontSize="20" FontFamily="Comic Sans MS" FontWeight="Bold"/>
+        <Image x:Name="imgMessage" Height="128" Canvas.Left="379" Source="/img/Message.png" Stretch="Fill" Canvas.Top="192" Width="384" RenderOptions.BitmapScalingMode="NearestNeighbor" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="Hidden"/>
+        <Label x:Name="labMessage" Content="" Canvas.Left="393" Canvas.Top="204" FontSize="20" FontFamily="Comic Sans MS" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Height="52" Width="362" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        <Label x:Name="labMessage2" Content="" Canvas.Left="393" Canvas.Top="256" FontSize="16" FontFamily="Comic Sans MS" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Height="52" Width="362" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
 
     </Canvas>
 </Window>

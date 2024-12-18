@@ -1,0 +1,14 @@
+﻿<Window x:Name="fenetreDebut" x:Class="Fusee.Pause"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Fusee"
+        mc:Ignorable="d"
+        Title="Hydro-fusée  -  Bienvenue" Height="734" Width="1152" ResizeMode="NoResize">
+    <Canvas Background="#FF46190B">
+        <Image x:Name="imgEcranDem" Height="704" Source="/img/EcranDemarrage.png" Stretch="Fill" Width="1152" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+        <Button x:Name="butJouer" Content="Jouer" Canvas.Left="430" Canvas.Top="523" Height="48" Width="291" FontSize="30" FontFamily="Comic Sans MS" Background="#FFE1FCFF" BorderBrush="#FF224C58" Click="butJouer_Click"/>
+
+    </Canvas>
+</Window>
