@@ -54,8 +54,9 @@ namespace Fusee
         //
         private static readonly int FREQUENCERAFRAICHISSEMENT = 60;
         private static readonly int TICKSENTREIMGAIGUILLE = 5;
+        private static readonly int TICKSDUREEMESSAGEENCORE = 15;
         #endregion
-        #region Tableaux, listes
+        #region Tableaux, listes, sons
         //Tableaux de Bitmaps
         private static BitmapImage[] imagesCoiffe;
         private static BitmapImage[] imagesCorps;
@@ -68,9 +69,10 @@ namespace Fusee
         private static BitmapImage[] imagesAiguille;
         private static BitmapImage[] imagesEauTiree;
         private static BitmapImage[,] imagesEau;
-        //Tableaux de sons et de musiques
-        private static SoundPlayer[] sons;
-        private static MediaPlayer[] musiques;
+        //Musiques
+        private static MediaPlayer musiqueVol;
+        private static MediaPlayer musiqueAmbiance;
+        private static SoundPlayer sonJauge;
         //Tableaux d'images
         private static Image[] oiseauxEnJeuGauche;
         private static Image[] oiseauxEnJeuDroite;
@@ -101,6 +103,7 @@ namespace Fusee
         private static int numChance;
         private static int numAiguille;
         private static int etatEau = 0;
+        private static int nbTicksMessageEncore=16;
         
 
         private static bool tremblements = true; //Pour activer/desactiver tremblements de la fusée (vent)
@@ -123,13 +126,15 @@ namespace Fusee
         {
             rnd = new Random();
             InitializeComponent();
+            InitMusiqueMenu();
+            musiqueAmbiance.Play();
             Pause pause = new Pause();
             if (pause.ShowDialog() == true)
             {
                 InitTimer();
                 InitBitmaps();
-                InitSons();
                 InitMusiques();
+                InitSonJauge();
                 InitOiseaux();
                 InitNuages(); //A coder, initialiser nuages en C# et pas xaml
                 jauge = true;
@@ -291,7 +296,7 @@ namespace Fusee
                 imgAiguille.Source = imagesAiguille[numAiguille/ TICKSENTREIMGAIGUILLE % 8];
                 if (cliqueEspace)
                 {
-
+                    sonJauge.Play();
                     cliqueEspace = false;
                     if((numAiguille / TICKSENTREIMGAIGUILLE % 8)==4 || (numAiguille / TICKSENTREIMGAIGUILLE % 8) == 0)
                     {
@@ -318,7 +323,13 @@ namespace Fusee
                         FinMessage();
                         DebutVol();
                     }
+                    else
+                    {
+                        nbTicksMessageEncore = 0;
+                    }
+                    
                 }
+                MessageContinuerAppuyer();
             }
         }
         #endregion
@@ -352,6 +363,7 @@ namespace Fusee
                     RepositionneOiseau(oiseauxEnJeuGauche[i], true);
                 }
                 Canvas.SetLeft(oiseauxEnJeuGauche[i], nouvellePosition);
+                oiseauxEnJeuGauche[i].Source = imagesOiseauGauche[(Array.IndexOf(imagesOiseauGauche, oiseauxEnJeuGauche[i].Source)+1)%NBIMAGESOISEAU];
             }
             //Oiseaux venant de la droite
             for (int i = 0; i < oiseauxEnJeuDroite.Length; i++)
@@ -363,6 +375,7 @@ namespace Fusee
                     RepositionneOiseau(oiseauxEnJeuDroite[i], false);
                 }
                 Canvas.SetLeft(oiseauxEnJeuDroite[i], nouvellePosition);
+                oiseauxEnJeuDroite[i].Source = imagesOiseauDroite[(Array.IndexOf(imagesOiseauDroite, oiseauxEnJeuDroite[i].Source) + 1) % NBIMAGESOISEAU];
             }
         }
         #endregion
@@ -401,6 +414,8 @@ namespace Fusee
             }
             etatEau = 0; //met eau dans etat de base
             vol = false; //fin du vol
+            musiqueVol.Stop();
+            musiqueAmbiance.Play();
 
         }
         #endregion
@@ -414,6 +429,9 @@ namespace Fusee
             Canvas.SetTop(imgJauge, canFond.Height + imgJauge.Height);
             vol = true;
             jauge = false;
+            musiqueAmbiance.Stop();
+            musiqueVol.Play();
+
         }
         #endregion
         #region Tests des collisions
@@ -558,6 +576,26 @@ namespace Fusee
         }
         #endregion
         #region Gestion des messages affichés
+        private void MessageContinuerAppuyer()
+        {
+            if (nbTicksMessageEncore <= TICKSDUREEMESSAGEENCORE)
+            {
+                labEncore.Visibility = Visibility.Visible;
+                nbTicksMessageEncore++;
+#if DEBUG
+                Console.WriteLine("nbTicksMessageEncore : "+nbTicksMessageEncore);
+#endif
+            }
+            else
+            {
+                labEncore.Visibility= Visibility.Hidden;
+            }
+            if (jauge == false)
+            {
+                labEncore.Visibility = Visibility.Hidden;
+            }
+
+        }
         private void MessagePause()
         {
             imgMessage.Visibility = Visibility.Visible;
@@ -575,7 +613,7 @@ namespace Fusee
         private void MessageFinVol()
         {
             imgMessage.Visibility = Visibility.Visible;
-            labMessage.Content = "VOUS AVEZ EVITE TOUTES LES COLLISIONS";
+            labMessage.Content = "VOUS AVEZ EVITE LES OISEAUX";
             labMessage2.Content = "Appuyez sur espace pour continuer";
         }
 
@@ -610,16 +648,37 @@ namespace Fusee
             InitBitmapsAiguille();
         }
 
-        private void InitSons()
+        private void InitMusiqueMenu()
         {
-
+            musiqueAmbiance = new MediaPlayer();
+            musiqueAmbiance.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "musique/Ambiance.mp3"));
+            musiqueAmbiance.MediaEnded += RelanceMusiqueMenu;
+            musiqueAmbiance.Volume = 1.0;
+        }
+        private void RelanceMusiqueMenu(object? sender, EventArgs e)
+        {
+            musiqueAmbiance.Position = TimeSpan.Zero;
+            musiqueAmbiance.Play();
         }
 
         private void InitMusiques()
         {
-
+            musiqueVol = new MediaPlayer();
+            musiqueVol.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "musique/Unity_TheFatRat.mp3"));
+            musiqueVol.MediaEnded += RelanceMusique;
+            musiqueVol.Volume = 1.0;
         }
 
+        private void RelanceMusique(object? sender, EventArgs e)
+        {
+            musiqueVol.Position = TimeSpan.Zero;
+            musiqueVol.Play();
+        }
+
+        private void InitSonJauge()
+        {
+            sonJauge = new SoundPlayer(Application.GetResourceStream(new Uri("pack://application:,,,/sons/SonJauge.wav")).Stream);
+        }
         private void InitBitmapsEau()
         {
             imagesEau = new BitmapImage[NBETATSEAU, NBIMAGESEAU];

@@ -57,6 +57,8 @@
     <None Remove="img\Socle0.png" />
     <None Remove="img\Socle_fusee.png" />
     <None Remove="img\Sol.png" />
+    <None Remove="musique\SonJauge.mp3" />
+    <None Remove="sons\SonJauge.wav" />
   </ItemGroup>
 
   <ItemGroup>
@@ -92,6 +94,16 @@
     <Resource Include="img\OiseauGauche\OiseauGauche0.png" />
     <Resource Include="img\OiseauGauche\OiseauGauche1.png" />
     <Resource Include="img\Pompe1.png" />
+    <Resource Include="sons\SonJauge.wav" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="musique\Ambiance.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="musique\Unity_TheFatRat.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

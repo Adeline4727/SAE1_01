@@ -5,8 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Fusee"
         mc:Ignorable="d"
-        Title="Hydro-fusée  -  Bienvenue" Height="734" Width="1152" ResizeMode="NoResize">
-    <Canvas Background="#FF46190B">
+        Title="Hydro-fusée  -  Bienvenue" Height="734" Width="1152" ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        WindowState="Maximized"
+        Background="#FF224C58">
+    <Canvas Background="#FF224C58" Width="1152"
+            Height="704"
+            MinWidth="1152"
+            MinHeight="704"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center">
         <Image x:Name="imgEcranDem" Height="704" Source="/img/EcranDemarrage.png" Stretch="Fill" Width="1152" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
         <Button x:Name="butJouer" Content="Jouer" Canvas.Left="430" Canvas.Top="523" Height="48" Width="291" FontSize="30" FontFamily="Comic Sans MS" Background="#FFE1FCFF" BorderBrush="#FF224C58" Click="butJouer_Click"/>
 

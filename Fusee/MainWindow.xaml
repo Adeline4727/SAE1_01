@@ -5,8 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Fusee"
         mc:Ignorable="d"
-        Title="Hydro-fusée" Height="734" Width="1152" KeyDown="fenetrePrincipale_KeyDown" ResizeMode="NoResize" Background="#FF451B0A">
-    <Canvas x:Name="canFond" Height="704" Width="1152" Background="#FF070C1F" VerticalAlignment="Top">
+        Title="Hydro-fusée" Height="734" Width="1152" KeyDown="fenetrePrincipale_KeyDown" ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        Background="#FF224C58">
+    <Canvas x:Name="canFond" Height="704" Width="1152" MinWidth="1152" MinHeight="704" Background="#FF070C1F" VerticalAlignment="Center" HorizontalAlignment="Center">
         <Image x:Name="imgFond" Height="704" Source="/img/Decor/Background.png" Stretch="Fill" Width="1152" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
         <Image x:Name="imgSol" Height="128" Source="/img/Decor/Sol.png" Stretch="Fill" Canvas.Top="576" Width="1152" RenderOptions.BitmapScalingMode="NearestNeighbor" HorizontalAlignment="Center" VerticalAlignment="Top"/>
         <Image x:Name="imgNuage1" Height="128" Canvas.Left="724" Source="/img/Nuages/Nuage1.png" Stretch="Fill" Canvas.Top="-482" Width="384" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
@@ -24,6 +26,7 @@
         <Image x:Name="imgMessage" Height="128" Canvas.Left="379" Source="/img/Message.png" Stretch="Fill" Canvas.Top="192" Width="384" RenderOptions.BitmapScalingMode="NearestNeighbor" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="Hidden"/>
         <Label x:Name="labMessage" Content="" Canvas.Left="393" Canvas.Top="204" FontSize="20" FontFamily="Comic Sans MS" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Height="52" Width="362" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
         <Label x:Name="labMessage2" Content="" Canvas.Left="393" Canvas.Top="256" FontSize="16" FontFamily="Comic Sans MS" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Height="52" Width="362" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        <Label x:Name="labEncore" Content="Encore ! " Canvas.Left="645" Canvas.Top="640" FontSize="16" FontFamily="Comic Sans MS"  Foreground="White" Visibility="Hidden"/>
 
     </Canvas>
 </Window>
