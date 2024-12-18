@@ -17,16 +17,16 @@ namespace Fusee
         //Caractéristiques du jeu
         private static readonly int VITESSEOISEAUX = 400;
         private static readonly int DEPLACEMENTBOUTEILLE = 25;
-        private static readonly int VITESSEENPLUSCLICVERT = 200;            //5.55555; //en m.s-1
-        private static readonly int VITESSEENPLUSCLICJAUNE = 150;               //4.16666;
-        private static readonly int VITESSEENPLUSCLICROUGE = 100;               //2.77777;//Faire recherches et calculs physique
-        private static readonly int ACCELERATIONFUSEE = -1;                //-10.00000; //en m.s-2
+        private static readonly int VITESSEENPLUSCLICVERT = 200;
+        private static readonly int VITESSEENPLUSCLICJAUNE = 150;
+        private static readonly int VITESSEENPLUSCLICROUGE = 100;
+        private static readonly int ACCELERATIONFUSEE = -1;
         private static readonly int DEPLACEMENTOISEAUX = 8;
         private static readonly int NBCHANCESMINIMUM = 5;
         private static readonly int NBCHANCESMAXIMUM = 10;
-        private static readonly int VITESSEFINVOL = 150;
+        private static readonly int VITESSEFINVOL = 0;
         //Nombre de chaque images pour en rajouter facilement et faciliter les chargements
-        private static readonly int NBIMGCOIFFE = 1;
+        private static readonly int NBIMGCOIFFE = 1; //Utile lors du rajout d'image pour personnaliser la fusée par exemple, ou rajouter des frames d'animation
         private static readonly int NBIMGAILERONS = 1;
         private static readonly int NBIMGCORPS = 1;
         private static readonly int NBIMGPOMPE = 1;
@@ -36,48 +36,51 @@ namespace Fusee
         private static readonly int NBETATSEAU = 2;
         private static readonly int NBIMAGESEAUTIREE = 1;
         //Nombre d'oiseaux
-        private static readonly int NBOISEAUXENJEUGAUCHE = 1;
+        private static readonly int NBOISEAUXENJEUGAUCHE = 1; //A modifier pour plus ou moins d'oiseaux en jeu, d'un côté ou l'autre
         private static readonly int NBOISEAUXENJEUDROITE = 1;
         //Canvas.Top de départs
-        private static readonly int POSDEPARTSOCLE = 566;
+        private static readonly int POSDEPARTSOCLE = 566;  //Positions .Top de départs pour repositionner éléments de décor après vol
         private static readonly int POSDEPARTPOMPE = 502;
         private static readonly int POSDEPARTAIGUILLE = 576;
         private static readonly int POSDEPARTJAUGE = 576;
         //Canvas.Left de départ
-        private static readonly int POSDEPARTCORPS = 539;
+        private static readonly int POSDEPARTCORPS = 539;  //Positions .Left de départ pour repositionner la fusée en fin de vol
         private static readonly int POSDEPARTAILERONS = 512;
         private static readonly int POSDEPARTCOIFFE = 539;
         private static readonly int POSDEPARTEAU = 539;
         //Taille des oiseaux
-        private static readonly int LARGEUROISEAU = 64;
+        private static readonly int LARGEUROISEAU = 64; //Pour créer les oiseaux
         private static readonly int HAUTEUROISEAU = 64;
         //
-        private static readonly int FREQUENCERAFRAICHISSEMENT = 60;
+        private static readonly int FREQUENCERAFRAICHISSEMENT = 60; //Pour les animations
         private static readonly int TICKSENTREIMGAIGUILLE = 5;
         private static readonly int TICKSDUREEMESSAGEENCORE = 15;
         #endregion
         #region Tableaux, listes, sons
         //Tableaux de Bitmaps
-        private static BitmapImage[] imagesCoiffe;
-        private static BitmapImage[] imagesCorps;
-        private static BitmapImage[] imagesAilerons;
+        private static BitmapImage[] imagesCoiffe; //Tableaux créés pour faiciliter le changement de source d'une image
+        private static BitmapImage[] imagesCorps;  //Bien qu'ils ne soient pas utiles actuellement, ils devaient permettre de gérer les différentes
+        private static BitmapImage[] imagesAilerons;//images facilement pour la personnalisation de la fusée.
         private static BitmapImage[] imagesPompe;
-        private static BitmapImage[] imagesOiseauGauche;
-        private static BitmapImage[] imagesOiseauDroite;
+        private static BitmapImage[] imagesOiseauGauche; //Ces tableaux servent pour les animations des éléments, bien que certaines n'aient pas pu
+        private static BitmapImage[] imagesOiseauDroite; //être développées
         private static BitmapImage[] imagesNuage;
         private static BitmapImage[] imagesNuageDeux;
         private static BitmapImage[] imagesAiguille;
         private static BitmapImage[] imagesEauTiree;
-        private static BitmapImage[,] imagesEau;
+        private static BitmapImage[,] imagesEau;         //Il s'agit d'un tableau à deux dimensions car le niveau de l'eau devait diminuer en cours de vol
+                                                         // Et chaque niveau d'eau devait être animé
         //Musiques
         private static MediaPlayer musiqueVol;
         private static MediaPlayer musiqueAmbiance;
         private static SoundPlayer sonJauge;
         //Tableaux d'images
-        private static Image[] oiseauxEnJeuGauche;
+        private static Image[] oiseauxEnJeuGauche;      //Tableaux d'images pour les créer et les déplacer facilement
         private static Image[] oiseauxEnJeuDroite;
         private static Image[] nuages;
         //Listes pour les objets personnalisables
+        //Les listes n'ont pas été utilisées
+        //Elles devaient servir à stocker les objets déjà achetés et ceux disponibles à l'achat, pour la personnalisation de la fusée
         List<BitmapImage> imgCoiffeDispos = new List<BitmapImage>(NBIMGCOIFFE-1); //Liste des objets disponibles à l'achat
         List<BitmapImage> imgCorpsDispos = new List<BitmapImage>(NBIMGCORPS-1);
         List<BitmapImage> imgAileronsDispos = new List<BitmapImage>(NBIMGAILERONS-1);
@@ -91,10 +94,10 @@ namespace Fusee
         //Variables globales
         private static int score = 0;
         private static int meilleurScore = 0;
-        private static int argentDispo = 0;
+        private static int argentDispo = 0; //Pour achat des pièces de fusée
         private static int volumeMusiques = 100; //Pour paramètres de son
         private static int volumeSons = 100;
-        private static int coiffeSelectionnee = 1; //Pour pouvoir personnaliser après
+        private static int coiffeSelectionnee = 1; //Pour changer facilement de source lors de la personnalisation de la fusée
         private static int corpsSelectionne = 1;
         private static int aileronsSelectionnes = 1;
         private static int pompeSelectionnee = 1;
@@ -102,14 +105,14 @@ namespace Fusee
         private static int nbChances;
         private static int numChance;
         private static int numAiguille;
-        private static int etatEau = 0;
+        private static int etatEau = 0; //Pour faire diminuer le niveau de l'eau
         private static int nbTicksMessageEncore=16;
         
 
-        private static bool tremblements = true; //Pour activer/desactiver tremblements de la fusée (vent)
+        private static bool tremblements = true; //Pour activer/desactiver tremblements de la fusée (vent) (n'a pas été dev non plus)
         private static bool gauche, droite;
         private static bool minuterieActive;
-        private static bool vol;
+        private static bool vol; //Les différents moments du jeu
         private static bool jauge;
         private static bool jaugeEnCours = false;
         private static bool cliqueEspace = false;
@@ -124,25 +127,25 @@ namespace Fusee
 
         public MainWindow()
         {
-            rnd = new Random();
+            rnd = new Random(); //Initialise la MainWindow et lance l'écran de lancement du jeu
             InitializeComponent();
             InitMusiqueMenu();
             musiqueAmbiance.Play();
             Pause pause = new Pause();
-            if (pause.ShowDialog() == true)
+            if (pause.ShowDialog() == true) //Le jeu ne se lance que si l'on clique sur jouer 
             {
                 InitTimer();
                 InitBitmaps();
                 InitMusiques();
                 InitSonJauge();
                 InitOiseaux();
-                InitNuages(); //A coder, initialiser nuages en C# et pas xaml
+                InitNuages();
                 jauge = true;
                 vol = false;
             }
             else
             {
-                this.Close();
+                this.Close(); //Si on ne clique pas sur jouer, le jeu se ferme
             }
         }
         #endregion
@@ -150,7 +153,7 @@ namespace Fusee
 
         private void fenetrePrincipale_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Left)
+            if (e.Key == Key.Left) //Touches de déplacement
             {
                 gauche = true;
                 droite= false;
@@ -162,7 +165,7 @@ namespace Fusee
             }
             if (e.Key == Key.Enter)
             {
-                if (minuterieActive == true)
+                if (minuterieActive == true) //Permet de mettre pause à tout moment, utile pour DEBUG
                 {
                     minuterie.Stop();
                     minuterieActive = false;
@@ -176,7 +179,7 @@ namespace Fusee
                 }
                 
             }
-            if (e.Key == Key.Space)
+            if (e.Key == Key.Space) //Permet de continuer dans les messages, et de cliquer dans la jauge
             {
                 if (jaugeEnCours == true)
                 {
@@ -197,27 +200,27 @@ namespace Fusee
         }
         #endregion
         #region timer
-        private void InitTimer()
+        private void InitTimer() //Initialisation de la minuterie
         {
             minuterie = new DispatcherTimer();
-            minuterie.Interval = TimeSpan.FromMilliseconds(16);
+            minuterie.Interval = TimeSpan.FromMilliseconds(16);//En 60 FPS
             minuterie.Tick += Jeu;
             minuterie.Start();
             minuterieActive = true;
         }
         #endregion
         #region Boucle du jeu
-        private void Jeu(object? sender, EventArgs e)
+        private void Jeu(object? sender, EventArgs e) //Moteur de jeu
         {
 #if DEBUG
             Console.WriteLine(" jauge : " + jauge);
             Console.WriteLine(" vol : " + vol);
 #endif
-            if (jauge == true && vol == false)
+            if (jauge == true && vol == false) //Avant le vol, lance la jauge
             {
                 Jauge();
             }
-            else if (vol == true && jauge == false)
+            else if (vol == true && jauge == false) //Pendant le vol, gère le déplacement de la fusée, des oiseaux, des nuages, du score
             {
                 DeplacementFusee(imgCoiffe);
                 DeplacementFusee(imgCorps);
@@ -227,11 +230,11 @@ namespace Fusee
                 DeplacementVertOiseaux(); 
                 DeplacementNuages(); 
                 Score();
-                vitesse += ACCELERATIONFUSEE;
+                vitesse += ACCELERATIONFUSEE; //Actualise la vitesse, qui diminue car c'est un fusée en plastique en chute libre (je n'ai pas pris en compte les frottements, et la gravité n'est pas réaliste)
 #if DEBUG
                 Console.WriteLine("Left: " + Canvas.GetLeft(imgNuage1) + " Top: " + Canvas.GetTop(imgNuage1));
 #endif
-                if (Collision())
+                if (Collision()) //Teste s'il y a une collsion
                 {
 #if DEBUG
                     Console.WriteLine("Collision");
@@ -239,7 +242,7 @@ namespace Fusee
                     FinVol();
                     MessageCollision();
                 }
-                if (vitesse <= VITESSEFINVOL)
+                if (vitesse <= VITESSEFINVOL) //Teste si la vitesse a diminué assez pour arrêter le vol 
                 {
 #if DEBUG
                     Console.WriteLine("Fin du vol");
@@ -250,20 +253,20 @@ namespace Fusee
                 gauche = false;
                 droite = false;
             }
-            else
+            else //Après le vol
             {
                 if (!continuer1)
                 {
-
+                    //On ne fait rien et le message précédent reste affiché tant que le joueur ne clique pas sur espace pour continuer
                 }
                 else
                 {
                     if (!continuer2)
                     {
-                        MessageContinuer();
+                        MessageContinuer(); //Le message suivant s'affiche quand le joueur a cliqué une fois sur espace
                     }
                     else
-                    {
+                    { //Le joueur a passé les deux messages, le jeu recommence
                         FinMessage();
                         jauge = true;
                         vol = false;
@@ -283,22 +286,22 @@ namespace Fusee
             imgAiguille.Source = imagesAiguille[0];
             if (jaugeEnCours == false)
             {
-                jaugeEnCours = true;
+                jaugeEnCours = true; //Lance la jauge lorsque l'on rentre dans la méthode pour la première fois depuis le dernier vol
                 numAiguille = 0;
                 numChance = 1;
-                nbChances = rnd.Next(NBCHANCESMINIMUM, NBCHANCESMAXIMUM);
-                vitesse = 0;
-                MessageJauge();
+                nbChances = rnd.Next(NBCHANCESMINIMUM, NBCHANCESMAXIMUM); //Le nombre de clics est aléatoire, on ne sait pas quand la fusée aura trop de pression et lachera
+                vitesse = 0; //Réinitialise la vitesse de la fusée
+                MessageJauge(); //Affiche les instructions de la jauge
             }
-            if (jaugeEnCours)
+            if (jaugeEnCours) //Pendant la jauge
             {
                 numAiguille++;
-                imgAiguille.Source = imagesAiguille[numAiguille/ TICKSENTREIMGAIGUILLE % 8];
+                imgAiguille.Source = imagesAiguille[numAiguille/ TICKSENTREIMGAIGUILLE % 8]; //Anime l'aiguille
                 if (cliqueEspace)
                 {
                     sonJauge.Play();
                     cliqueEspace = false;
-                    if((numAiguille / TICKSENTREIMGAIGUILLE % 8)==4 || (numAiguille / TICKSENTREIMGAIGUILLE % 8) == 0)
+                    if((numAiguille / TICKSENTREIMGAIGUILLE % 8)==4 || (numAiguille / TICKSENTREIMGAIGUILLE % 8) == 0) //Détecte l'emplacement de l'aiguille
                     {
                         vitesse += VITESSEENPLUSCLICROUGE;
                     }
@@ -317,7 +320,7 @@ namespace Fusee
 #endif
                     if (numChance > nbChances)
                     {
-                        jaugeEnCours = false;
+                        jaugeEnCours = false; //Arrête la jauge et lance le vol lorsque toutes les chances de clic sont passées
                         jauge = false;
                         imgAiguille.Source = imagesAiguille[0];
                         FinMessage();
@@ -325,11 +328,11 @@ namespace Fusee
                     }
                     else
                     {
-                        nbTicksMessageEncore = 0;
+                        nbTicksMessageEncore = 0; //Remet le temps écoulé d'affichage du message "encore" à 0, pour qu'il se relance lorsque sa méthode sera appelée
                     }
                     
                 }
-                MessageContinuerAppuyer();
+                MessageContinuerAppuyer();//Lance la méthode du message "encore"
             }
         }
         #endregion
@@ -343,7 +346,7 @@ namespace Fusee
                 nouvellePosition += DEPLACEMENTBOUTEILLE;
 
             if (nouvellePosition <= (canFond.ActualWidth-imgAilerons.ActualWidth/2-img.ActualWidth/2) && nouvellePosition > (imgAilerons.ActualWidth/2 -img.ActualWidth/2))
-            {
+            { //Vérifie que la fusée ne sort pas du canvas
                 Canvas.SetLeft(img, nouvellePosition);
             }
 
@@ -353,24 +356,24 @@ namespace Fusee
         private void DeplacementOiseau()
         {
             double nouvellePosition;
-            //Oiseaux venant de la gauche
+            //Anime et déplace horizontalement les oiseaux venant de la gauche
             for (int i = 0;i < oiseauxEnJeuGauche.Length; i++)
             {
                 nouvellePosition = Canvas.GetLeft(oiseauxEnJeuGauche[i]);
                 nouvellePosition += DEPLACEMENTOISEAUX;
-                if (nouvellePosition >=canFond.Width)
+                if (nouvellePosition >=canFond.Width)  //Vérfie que l'oiseau ne sort pas du Canvas
                 {
                     RepositionneOiseau(oiseauxEnJeuGauche[i], true);
                 }
                 Canvas.SetLeft(oiseauxEnJeuGauche[i], nouvellePosition);
                 oiseauxEnJeuGauche[i].Source = imagesOiseauGauche[(Array.IndexOf(imagesOiseauGauche, oiseauxEnJeuGauche[i].Source)+1)%NBIMAGESOISEAU];
             }
-            //Oiseaux venant de la droite
+            //Anime et déplace horizontalement les oiseaux venant de la gauche
             for (int i = 0; i < oiseauxEnJeuDroite.Length; i++)
             {
                 nouvellePosition = Canvas.GetLeft(oiseauxEnJeuDroite[i]);
                 nouvellePosition -= DEPLACEMENTOISEAUX;
-                if (nouvellePosition<=-LARGEUROISEAU)
+                if (nouvellePosition<=-LARGEUROISEAU) //Vérfie que l'oiseau ne sort pas du Canvas
                 {
                     RepositionneOiseau(oiseauxEnJeuDroite[i], false);
                 }
@@ -380,20 +383,20 @@ namespace Fusee
         }
         #endregion
         #region Changements de fin du vol
-        private void FinVol()
+        private void FinVol() //Est déclenché à la fin du vol
         {
 #if DEBUG
             Console.WriteLine("Ca marche");
 #endif
-            Canvas.SetTop(imgSol, canFond.Height-imgSol.Height);
+            Canvas.SetTop(imgSol, canFond.Height-imgSol.Height); //Replace les éléments du décor
 #if DEBUG
             Console.WriteLine("Ca marche");
-#endif//positions du décor
+#endif
             Canvas.SetTop(imgSocle, POSDEPARTSOCLE);
             Canvas.SetTop(imgPompe, POSDEPARTPOMPE);
             Canvas.SetTop(imgAiguille, POSDEPARTAIGUILLE);
             Canvas.SetTop(imgJauge, POSDEPARTJAUGE);
-            for (int i = 0; i < oiseauxEnJeuDroite.Length; i++) //Position des oiseaux
+            for (int i = 0; i < oiseauxEnJeuDroite.Length; i++) //Repositionne les oiseaux
             {
                 RepositionneOiseau(oiseauxEnJeuDroite[i], false);
             }
@@ -401,7 +404,7 @@ namespace Fusee
             {
                 RepositionneOiseau(oiseauxEnJeuGauche[i], true);
             }
-            Canvas.SetLeft(imgAilerons, POSDEPARTAILERONS); //Position de la fusée et de l'eau
+            Canvas.SetLeft(imgAilerons, POSDEPARTAILERONS); //Rositionne la fusée et l'eau dans la fusée
             Canvas.SetLeft(imgCoiffe, POSDEPARTCOIFFE);
             Canvas.SetLeft(imgCorps, POSDEPARTCORPS);
             Canvas.SetLeft(imgEau, POSDEPARTEAU);
@@ -412,8 +415,8 @@ namespace Fusee
             {
                 RepositionneNuage(nuages[i]);
             }
-            etatEau = 0; //met eau dans etat de base
-            vol = false; //fin du vol
+            etatEau = 0; //met eau dans etat de base, pas utile actuellement mais plus tard pour diminution niveau de l'eau
+            vol = false; //fin du mode vol
             musiqueVol.Stop();
             musiqueAmbiance.Play();
 
@@ -422,14 +425,14 @@ namespace Fusee
         #region Debut du vol
         private void DebutVol()
         {
-            Canvas.SetTop(imgSol, canFond.Height + imgSol.Height);
+            Canvas.SetTop(imgSol, canFond.Height + imgSol.Height); //Déplace les éléments de décor qui doivent partir pour le vol
             Canvas.SetTop(imgSocle, canFond.Height+imgSocle.Height);
             Canvas.SetTop(imgPompe, canFond.Height + imgPompe.Height);
             Canvas.SetTop(imgAiguille, canFond.Height+ imgAiguille.Height);
             Canvas.SetTop(imgJauge, canFond.Height + imgJauge.Height);
-            vol = true;
+            vol = true; //Lance le mode vol
             jauge = false;
-            musiqueAmbiance.Stop();
+            musiqueAmbiance.Stop(); //Lance la musique du vol
             musiqueVol.Play();
 
         }
@@ -563,7 +566,7 @@ namespace Fusee
         }
         #endregion
         #region Repositionnement des nuages
-        private void RepositionneNuage(Image Nuage)
+        private void RepositionneNuage(Image Nuage) //Repositionnes les nuages à un Top et Left alétoire mais au-dessus du Canvas et de manière à ce que le nuage dépasse au moins peu dans l'écran
         {
             int nouveauTop = -rnd.Next((int)Nuage.Height, (int)(Nuage.Height + canFond.Height));
             Canvas.SetTop(Nuage, nouveauTop);
@@ -640,7 +643,7 @@ namespace Fusee
         #endregion
         #region Initialisation des Bitmaps et des sons
         private void InitBitmaps()
-        {
+        {//Lance les méthodes d'init des Bitmaps
             InitBitmapsOiseaux();
             InitBitmapsEauTiree();
             InitBitmapsFusee();
